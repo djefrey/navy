@@ -5,17 +5,74 @@
 ** main
 */
 
+#include <stdio.h>
 #include <stdlib.h>
 #include "my.h"
 #include "navy.h"
 #include "network.h"
 
-static void init_board(char my_board[8][8], char en_board[8][8], char *file)
+static char invalid_line(char *line, ssize_t read)
 {
-    char *boats[4] = {"2:C1:C2", "3:D4:F4", "4:B5:B8", "5:D7:H7"};
+    int size;
+    int len;
+    int start_pos;
+    int end_pos;
+
+    if (read != 7 || (line[0] < '2' || line[0] > '5'))
+        return (1);
+    else if (line[2] < 'A' || line[2] > 'H' || line[3] < '1' || line[3] > '8'
+    || line[5] < 'A' || line[5] > 'H' || line[6] < '1' || line[6] > '8')
+        return (1);
+    size = line[0] - '0';
+    start_pos = (line[2] - 'A') * 10 + (line[3] - '1');
+    end_pos = (line[5] - 'A') * 10 + (line[6] - '1');
+    len = ABS(end_pos - start_pos);
+    printf("%i %i\n", len, size);
+    if (len != size - 1 && len != (size - 1) * 10)
+        return (1);
+    return (0);
+}
+
+static char read_file(char *path, char *boats[4])
+{
+    FILE *file = fopen(path, "r");
+    char *line = NULL;
+    size_t len = 0;
+    ssize_t read;
+
+    if (file == NULL)
+        return (1);
+    for (int i = 0; i < 4; i++) {
+        read = getline(&line, &len, file);
+        if (read == 8) {
+            line[7] = 0;
+            read--;
+        }
+        if (invalid_line(line, read))
+            return (1);
+        boats[i] = line;
+        line = NULL;
+    }
+    return (0);
+}
+
+static char init_board(char my_board[8][8], char en_board[8][8], char *file)
+{
+    char *boats[4] = {NULL, NULL, NULL, NULL};
+
+    if (read_file(file, boats)) {
+        for (int i = 0; i < 4; i++) {
+            if (boats[i] != NULL)
+                free(boats[i]);
+        }
+        return (1);
+    }
     setup_board(my_board);
     setup_board(en_board);
     set_boats(my_board, boats);
+    for (int i = 0; i < 4; i++)
+        free(boats[i]);
+    return (0);
 }
 
 void print_board(char board[8][8])
@@ -46,16 +103,19 @@ char end_game(char end)
 int main(int ac, char *av[])
 {
     int enemy_pid;
-    char host = ac == 1;
+    char host = ac == 2;
     char my_board[8][8];
     char en_board[8][8];
 
-    if (ac == 2) {
+    if (ac == 3) {
         enemy_pid = my_getnbr(av[1]);
         init_signals(enemy_pid);
-    } else
+    } else if (ac == 2)
         enemy_pid = init_signals(-1);
-    init_board(my_board, en_board, NULL);
+    else
+        return (84);
+    if (init_board(my_board, en_board, host ? av[1] : av[2]))
+        return (84);
     while (play_turn(host, enemy_pid, my_board, en_board)) {}
     return (0);
 }
