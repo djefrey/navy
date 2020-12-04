@@ -45,6 +45,7 @@ char my_turn(int enemy_pid, char en_board[8][8])
     pos = (buff[0] - 'A') * 10 + (buff[1] - '1');
     send_position(enemy_pid, buff);
     res = wait_for_result();
+    my_printf("%s: %s\n", buff, (res & HIT_FLAG) ? "hit" : "miss");
     mark_pos(en_board, pos, (res & HIT_FLAG) > 0);
     if (res & WIN_FLAG) {
         end_game(1);
@@ -82,11 +83,13 @@ char my_board[8][8], char en_board[8][8])
     if (host) {
         if (my_turn(enemy_pid, en_board))
             return (0);
+        my_putchar('\n');
         if (en_turn(enemy_pid, my_board))
             return (0);
     } else {
         if (en_turn(enemy_pid, my_board))
             return (0);
+        my_putchar('\n');
         if (my_turn(enemy_pid, en_board))
             return (0);
     }

@@ -8,6 +8,8 @@
 #ifndef NAVY_H_
 #define NAVY_H_
 
+#define ABS(value) (value < 0 ? -value : value)
+
 void print_board(char board[8][8]);
 char end_game(char end);
 

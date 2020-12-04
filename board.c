@@ -5,6 +5,8 @@
 ** board
 */
 
+#include "my.h"
+
 void setup_board(char board[8][8])
 {
     for (int y = 0; y < 8; y++) {
