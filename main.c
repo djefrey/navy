@@ -27,7 +27,6 @@ static char invalid_line(char *line, ssize_t read)
     start_pos = (line[2] - 'A') * 10 + (line[3] - '1');
     end_pos = (line[5] - 'A') * 10 + (line[6] - '1');
     len = ABS(end_pos - start_pos);
-    printf("%i %i\n", len, size);
     if (len != size - 1 && len != (size - 1) * 10)
         return (1);
     return (0);
@@ -107,14 +106,14 @@ int main(int ac, char *av[])
     char my_board[8][8];
     char en_board[8][8];
 
+    if (ac < 2 || ac > 3 || init_board(my_board, en_board, host ? av[1] : av[2]))
+        return (84);
     if (ac == 3) {
         enemy_pid = my_getnbr(av[1]);
         init_signals(enemy_pid);
     } else if (ac == 2)
         enemy_pid = init_signals(-1);
     else
-        return (84);
-    if (init_board(my_board, en_board, host ? av[1] : av[2]))
         return (84);
     while (play_turn(host, enemy_pid, my_board, en_board)) {}
     return (0);
