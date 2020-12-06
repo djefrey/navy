@@ -26,18 +26,19 @@ void ask_target(char buff[2])
     char valid = 0;
 
     while (!valid) {
-        my_putstr("attack: ");
-        read(0, buff, 2);
+        if (buff[0] != 10)
+            my_putstr("attack: ");
+        read(STDIN_FILENO, buff, 2);
         valid = (buff[0] >= 'A' && buff[0] <= 'H'
         && buff[1] >= '1' && buff[1] <= '8');
-        if (!valid)
+        if (!valid && buff[0] != 10)
             my_putstr("wrong position\n");
     }
 }
 
 char my_turn(int enemy_pid, char en_board[8][8])
 {
-    char buff[2];
+    char buff[2] = {0, 0};
     int res;
     int pos;
 
@@ -45,7 +46,7 @@ char my_turn(int enemy_pid, char en_board[8][8])
     pos = (buff[0] - 'A') * 10 + (buff[1] - '1');
     send_position(enemy_pid, buff);
     res = wait_for_result();
-    my_printf("%s: %s\n", buff, (res & HIT_FLAG) ? "hit" : "miss");
+    my_printf("%s: %s\n", buff, (res & HIT_FLAG) ? "hit" : "missed");
     mark_pos(en_board, pos, (res & HIT_FLAG) > 0);
     if (res & WIN_FLAG) {
         end_game(1);
