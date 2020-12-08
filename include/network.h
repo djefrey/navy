@@ -19,9 +19,9 @@
 #define RESULT_MASK 768
 
 int send_position(int pid, char pos[2]);
-int wait_for_position();
+int wait_for_position(void);
 int send_result(int pid, char hit, char enemy_win);
-int wait_for_result();
+int wait_for_result(void);
 
 void send_message(int pid, int nb);
 

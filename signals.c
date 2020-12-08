@@ -59,7 +59,6 @@ int get_value_send(int destroy)
 int init_signals(int pid)
 {
     struct sigaction sa;
-    int ret = 0;
 
     sa.sa_sigaction = receive_pid;
     sa.sa_flags = SA_SIGINFO;
@@ -70,8 +69,6 @@ int init_signals(int pid)
         pause();
         usleep(10000);
         kill(VALUE, SIGUSR2);
-        ret = VALUE;
-        VALUE = 0;
     } else {
         sigaction(SIGUSR2, &sa, NULL);
         kill(pid, SIGUSR1);
@@ -79,5 +76,5 @@ int init_signals(int pid)
     }
     signal(SIGUSR1, &receive_signal);
     signal(SIGUSR2, &receive_signal);
-    return (ret);
+    return (get_value_send(1));
 }

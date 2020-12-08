@@ -9,7 +9,7 @@
 #include "network.h"
 #include "my.h"
 
-static int wait_for_message()
+static int wait_for_message(void)
 {
     while (!(get_value_send(0) & END_MESSAGE))
         pause();
@@ -28,7 +28,7 @@ int send_position(int pid, char pos[2])
     return (0);
 }
 
-int wait_for_position()
+int wait_for_position(void)
 {
     int value;
 
@@ -44,7 +44,7 @@ int send_result(int pid, char hit, char enemy_win)
     send_message(pid, value);
 }
 
-int wait_for_result()
+int wait_for_result(void)
 {
     int value = wait_for_message();
 
