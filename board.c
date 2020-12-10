@@ -64,7 +64,7 @@ char get_pos(char board[8][8], int pos)
         my_printf("%c%c: hit\n", 'A' + x, '1' + y);
         return (1);
     } else {
-        my_printf("%c%c: miss\n", 'A' + x, '1' + y);
+        my_printf("%c%c: missed\n", 'A' + x, '1' + y);
         return (0);
     }
 }
