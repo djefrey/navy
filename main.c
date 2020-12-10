@@ -106,7 +106,8 @@ int main(int ac, char *av[])
     char my_board[8][8];
     char en_board[8][8];
 
-    if (ac < 2 || ac > 3 || init_board(my_board, en_board, host ? av[1] : av[2]))
+    if (ac < 2 || ac > 3 ||
+    init_board(my_board, en_board, host ? av[1] : av[2]))
         return (84);
     if (ac == 3) {
         enemy_pid = my_getnbr(av[1]);
