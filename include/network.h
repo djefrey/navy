@@ -18,14 +18,21 @@
 #define WIN_FLAG 512
 #define RESULT_MASK 768
 
-int send_position(int pid, char pos[2]);
-int wait_for_position(void);
-int send_result(int pid, char hit, char enemy_win);
-int wait_for_result(void);
+/* --- TCP ---- */
 
-void send_message(int pid, int nb);
+#define PORT 4242
+
+/* ----------- */
 
 int init_signals(int pid);
+int init_tcp(char *ip, int *serv_sock);
+
+int send_position(int, char pos[2]);
+int wait_for_position(int);
+int send_result(int, char hit, char enemy_win);
+int wait_for_result(int);
+
+void send_message(int, int nb);
 int get_value_send(int destroy);
 
 #endif /* !NETWORK_H_ */
