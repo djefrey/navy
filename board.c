@@ -60,7 +60,7 @@ char get_pos(char board[8][8], int pos)
     int y = pos % 10;
     char c = board[x][y];
 
-    if (c >= '1' && c <= '4') {
+    if (c >= '2' && c <= '5') {
         my_printf("%c%c: hit\n", 'A' + x, '1' + y);
         return (1);
     } else {

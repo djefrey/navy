@@ -116,6 +116,6 @@ int main(int ac, char *av[])
         enemy_pid = init_signals(-1);
     else
         return (84);
-    while (play_turn(host, enemy_pid, my_board, en_board)) {}
+    while (play_turn(host, enemy_pid, my_board, en_board));
     return (0);
 }
