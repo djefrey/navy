@@ -45,7 +45,7 @@ char my_turn(int sock, char en_board[8][8])
     ask_target(buff);
     pos = (buff[0] - 'A') * 10 + (buff[1] - '1');
     send_position(sock, buff);
-    res = wait_for_result();
+    res = wait_for_result(sock);
     my_printf("%s: %s\n", buff, (res & HIT_FLAG) ? "hit" : "missed");
     mark_pos(en_board, pos, (res & HIT_FLAG) > 0);
     if (res & WIN_FLAG) {
@@ -61,7 +61,7 @@ char en_turn(int sock, char my_board[8][8])
     int hit;
     char lose;
 
-    pos = wait_for_position();
+    pos = wait_for_position(sock);
     hit = get_pos(my_board, pos);
     mark_pos(my_board, pos, hit);
     lose = check_lose(my_board);

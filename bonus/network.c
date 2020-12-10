@@ -5,7 +5,9 @@
 ** network
 */
 
-#include <signal.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <sys/socket.h>
 #include "network.h"
 #include "my.h"
 
