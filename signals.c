@@ -3,7 +3,6 @@
 ** navy
 ** File description:
 ** signals
-
 */
 
 #include <stdlib.h>

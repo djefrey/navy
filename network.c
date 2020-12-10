@@ -42,6 +42,7 @@ int send_result(int pid, char hit, char enemy_win)
     int value = hit * HIT_FLAG + enemy_win * WIN_FLAG;
 
     send_message(pid, value);
+    return (0);
 }
 
 int wait_for_result(void)
