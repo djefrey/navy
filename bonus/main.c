@@ -91,10 +91,10 @@ void print_board(char board[8][8])
 char end_game(char end)
 {
     if (end == -1) {
-        my_putstr("\nEnemy won\n");
+        my_putstr("\nEnemy won\n\n");
         return (1);
     } else if (end == 1) {
-        my_putstr("\nI won\n");
+        my_putstr("\nI won\n\n");
         return (1);
     } else
         return (0);
