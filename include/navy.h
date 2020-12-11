@@ -10,8 +10,9 @@
 
 #define ABS(value) (value < 0 ? -value : value)
 
+char init_board(char my_board[8][8], char en_board[8][8], char *file);
 void print_board(char board[8][8]);
-char end_game(char end);
+void end_game(char end);
 
 char check_lose(char my_board[8][8]);
 void ask_target(char buff[2]);

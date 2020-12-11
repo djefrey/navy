@@ -7,7 +7,8 @@
 
 MAIN	=	main.c
 SRC		=	../board.c			\
-			game.c				\
+			../utils.c			\
+			../game.c			\
 			network.c			\
 			tcp.c
 CFLAGS	+=	-W -Wall -I$(INC_DIR) -g
