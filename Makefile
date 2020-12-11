@@ -9,7 +9,8 @@ MAIN	=	main.c
 SRC		=	network.c		\
 			signals.c		\
 			board.c			\
-			game.c
+			game.c			\
+			utils.c
 CFLAGS	+=	-W -Wall -I$(INC_DIR) -g
 MAIN_O	=	$(MAIN:.c=.o)
 SRC_O	=	$(SRC:.c=.o)
