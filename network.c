@@ -28,7 +28,7 @@ int send_position(int pid, char pos[2])
     return (0);
 }
 
-int wait_for_position(void)
+int wait_for_position(int pid)
 {
     int value;
 
@@ -45,7 +45,7 @@ int send_result(int pid, char hit, char enemy_win)
     return (0);
 }
 
-int wait_for_result(void)
+int wait_for_result(int pid)
 {
     int value = wait_for_message();
 

@@ -5,6 +5,14 @@
 ** main
 */
 
+#include <stdlib.h>
+#include <stddef.h>
+#include <signal.h>
+#include <unistd.h>
+#include "my.h"
+#include "navy.h"
+#include "network.h"
+
 int main(int ac, char *av[])
 {
     int enemy_pid;
