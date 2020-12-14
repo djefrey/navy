@@ -7,8 +7,9 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <ncurses.h>
 #include "my.h"
-#include "navy.h"
+#include "bonus.h"
 #include "network.h"
 
 static char invalid_line(char *line, ssize_t read)
@@ -74,33 +75,27 @@ char init_board(char my_board[8][8], char en_board[8][8], char *file)
     return (0);
 }
 
-void print_board(char board[8][8])
+void print_board(WINDOW *win, char board[8][8], char *title)
 {
-    char c;
-
-    my_putstr(" |A B C D E F G H\n");
-    my_putstr("-+---------------\n");
-    for (int y = 0; y < 8; y++) {
-        my_printf("%i|", y + 1);
-        for (int x = 0; x < 8; x++) {
-            c = board[x][y];
-            if (c == 'x')
-                my_putstr("\e[31m");
-            else if (c == 'o' || (c >= '2' && c <= '5'))
-                my_putstr("\e[97m");
-            else
-                my_putstr("\e[90m");
-            my_putchar(c);
-            my_putstr("\e[39m");
-            my_putchar(x == 7 ? '\n' : ' ');
+    wclear(win);
+    box(win, ACS_VLINE, ACS_HLINE);
+    mvwprintw(win, 0, 3, title);
+    for (int i = 1; i <= 8; i++) {
+        mvwaddch(win, 1, X_FACT + i * X_FACT, 'A' + i - 1);
+        mvwaddch(win, Y_FACT + i * Y_FACT, X_FACT, '1' + i - 1);
+    }
+    for (int y = 1; y <= 8; y++) {
+        for (int x = 1; x <= 8; x++) {
+            mvwaddch(win, Y_FACT + y * Y_FACT, X_FACT + x * X_FACT, board[x - 1][y - 1]);
         }
     }
+    wrefresh(win);
 }
 
 void end_game(char end)
 {
     if (end == -1)
-        my_putstr("\nEnemy won\n\n");
+        print_status("Enemy won", 9);
     else if (end == 1)
-        my_putstr("\nI won\n\n");
+        print_status("I won", 5);
 }

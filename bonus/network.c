@@ -31,7 +31,6 @@ int wait_for_position(int sock)
     int value;
     int n;
 
-    my_putstr("waiting for enemy's attack...\n");
     if ((n = recv(sock, &value, sizeof(int), 0)) < 0) {
         perror("Error while receiving packet");
         exit(84);

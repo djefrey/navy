@@ -11,7 +11,7 @@ SRC		=	network.c		\
 			board.c			\
 			game.c			\
 			utils.c
-CFLAGS	+=	-W -Wall -I$(INC_DIR) -g
+CFLAGS	+=	-W -Wall -I$(INC_DIR)
 MAIN_O	=	$(MAIN:.c=.o)
 SRC_O	=	$(SRC:.c=.o)
 LIB_DIR	=	./mylib
@@ -22,7 +22,7 @@ all: $(NAME)
 
 $(NAME)	:	$(MAIN_O) $(SRC_O)
 	make -C $(LIB_DIR)
-	gcc -g -o $(NAME) $(MAIN_O) $(SRC_O) -I$(INC_DIR) -L$(LIB_DIR) -lmy
+	gcc -o $(NAME) $(MAIN_O) $(SRC_O) -I$(INC_DIR) -L$(LIB_DIR) -lmy
 
 clean	:
 	make -C $(LIB_DIR) clean

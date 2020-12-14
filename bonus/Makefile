@@ -6,12 +6,13 @@
 ##
 
 MAIN	=	main.c
-SRC		=	../board.c			\
-			../game.c			\
+SRC		=	board.c			\
+			game.c			\
 			utils.c			\
-			network.c			\
-			tcp.c
-CFLAGS	+=	-W -Wall -I$(INC_DIR) -g
+			network.c		\
+			tcp.c			\
+			windows.c
+CFLAGS	+=	-W -Wall -I$(INC_DIR)
 MAIN_O	=	$(MAIN:.c=.o)
 SRC_O	=	$(SRC:.c=.o)
 LIB_DIR	=	../mylib
@@ -22,7 +23,7 @@ all: $(NAME)
 
 $(NAME)	:	$(MAIN_O) $(SRC_O)
 	make -C $(LIB_DIR)
-	gcc -g -o $(NAME) $(MAIN_O) $(SRC_O) -I$(INC_DIR) -L$(LIB_DIR) -lmy
+	gcc -o $(NAME) $(MAIN_O) $(SRC_O) -I$(INC_DIR) -L$(LIB_DIR) -lmy -lncurses
 
 clean	:
 	make -C $(LIB_DIR) clean
