@@ -15,6 +15,7 @@
 #include <arpa/inet.h>
 #include <netdb.h>
 
+#include "my.h"
 #include "network.h"
 
 static int setup_client_conn(int serv_sock)
@@ -23,6 +24,7 @@ static int setup_client_conn(int serv_sock)
     struct sockaddr_in csin;
     unsigned int sinsize = sizeof csin;
 
+    my_putstr("Waiting enemy's connection...\n");
     csock = accept(serv_sock, (struct sockaddr*) &csin, &sinsize);
     if(csock == -1) {
         perror("Cannot accept connection");

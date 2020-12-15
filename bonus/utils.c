@@ -82,20 +82,12 @@ void print_board(WINDOW *win, char board[8][8], char *title)
     mvwprintw(win, 0, 3, title);
     for (int i = 1; i <= 8; i++) {
         mvwaddch(win, 1, X_FACT + i * X_FACT, 'A' + i - 1);
-        mvwaddch(win, Y_FACT + i * Y_FACT, X_FACT, '1' + i - 1);
+        mvwaddch(win, Y_FACT - 1 + i * Y_FACT, X_FACT, '1' + i - 1);
     }
     for (int y = 1; y <= 8; y++) {
         for (int x = 1; x <= 8; x++) {
-            mvwaddch(win, Y_FACT + y * Y_FACT, X_FACT + x * X_FACT, board[x - 1][y - 1]);
+            mvwaddch(win, Y_FACT - 1 + y * Y_FACT, X_FACT + x * X_FACT, board[x - 1][y - 1]);
         }
     }
     wrefresh(win);
-}
-
-void end_game(char end)
-{
-    if (end == -1)
-        print_status("Enemy won", 9);
-    else if (end == 1)
-        print_status("I won", 5);
 }

@@ -37,8 +37,6 @@ int main(int ac, char *av[])
     if (serv_sock)
         close(serv_sock);
     close(sock);
-    free(navy->my_win);
-    free(navy->en_win);
     free(navy);
     return (0);
 }

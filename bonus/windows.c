@@ -13,13 +13,14 @@ void print_status(char *status, int len)
     for (int i = 0; i < COLS; i++)
         mvaddch(LINES / 8 * 7, i, ' ');
     mvprintw(LINES / 8 * 7, COLS / 2 - len / 2, status);
+    refresh();
 }
 
 static void init_my_board_win(navy_t *navy)
 {
     int y = LINES / 8;
     int x = COLS / 2 - 51;
-    int height = 21;
+    int height = 20;
     int width = 42;
 
     navy->my_win = subwin(stdscr, height, width, y, x);
@@ -30,11 +31,11 @@ static void init_en_board_win(navy_t *navy)
 {
     int y = LINES / 8;
     int x = COLS / 2 + 11;
-    int height = 21;
+    int height = 20;
     int width = 42;
 
     navy->en_win = subwin(stdscr, height, width, y, x);
-    print_board(navy->en_win, navy->en_board, "Enemy's board");
+    print_board(navy->en_win, navy->en_board, " Enemy's board ");
 }
 
 static void init_target_win(navy_t *navy)

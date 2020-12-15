@@ -73,7 +73,7 @@ char my_turn(int sock, navy_t *navy)
     mark_pos(navy->en_board, pos, (res & HIT_FLAG) > 0);
     print_board(navy->en_win, navy->en_board, " Enemy's board ");
     if (res & WIN_FLAG) {
-        end_game(1);
+        print_status("I won", 5);
         return (1);
     } else
         return (0);
@@ -93,7 +93,7 @@ char en_turn(int sock, navy_t *navy)
     lose = check_lose(navy->my_board);
     send_result(sock, hit, lose);
     if (lose) {
-        end_game(-1);
+        print_status("Enemy won", 9);
         return (1);
     } else
         return (0);
