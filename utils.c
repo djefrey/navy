@@ -11,7 +11,7 @@
 #include "navy.h"
 #include "network.h"
 
-static char invalid_line(char *line, ssize_t read)
+static char invalid_line(char *line, ssize_t read, char *placed_boats)
 {
     int size;
     int len;
@@ -27,8 +27,10 @@ static char invalid_line(char *line, ssize_t read)
     start_pos = (line[2] - 'A') * 10 + (line[3] - '1');
     end_pos = (line[5] - 'A') * 10 + (line[6] - '1');
     len = ABS(end_pos - start_pos);
-    if (len != size - 1 && len != (size - 1) * 10)
+    if ((len != size - 1 && len != (size - 1) * 10) ||
+    *placed_boats & (1 << (line[0] - '2')))
         return (1);
+    *placed_boats += (1 << (line[0] - '2'));
     return (0);
 }
 
@@ -38,6 +40,7 @@ static char read_file(char *path, char *boats[4])
     char *line = NULL;
     size_t len = 0;
     ssize_t read;
+    char placed_boats = 0;
 
     if (file == NULL)
         return (1);
@@ -47,7 +50,7 @@ static char read_file(char *path, char *boats[4])
             line[7] = 0;
             read--;
         }
-        if (invalid_line(line, read))
+        if (invalid_line(line, read, &placed_boats))
             return (1);
         boats[i] = line;
         line = NULL;
